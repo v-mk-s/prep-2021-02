@@ -1,15 +1,15 @@
 // исключение повторного объявления библиотек
-//#ifndef STDDEF_H
-//#define STDDEF_H
-//#include <stddef.h>
-//#endif/* STDDEF_H */
+// #ifndef STDDEF_H
+// #define STDDEF_H
+// #include <stddef.h>
+// #endif/* STDDEF_H */
 #include "utils.h"
 #include "prime.h"
 #include "print_recursion.h"
 
-#include <stddef.h> // size_t
-#include <stdio.h> // printf()
-#include <stdlib.h> // int atoi(const char *str)
+#include <stddef.h>  // size_t
+#include <stdio.h>  // printf()
+#include <stdlib.h>  // int atoi(const char *str)
 
 
 
@@ -50,7 +50,7 @@ int main(int argc, const char** argv) {
 
     int Test_case = (int) strtol(argv[1], &end, 0);
     if (*end != '\0') {
-        //printf ("%s \n", "ERROR_STRTOL");
+        // printf ("%s \n", "ERROR_STRTOL");
         return ERR_STRTOL;
     }
 
@@ -111,7 +111,8 @@ int main(int argc, const char** argv) {
                 return ERR_STRTOL;
             }
 
-            // !! можно сделать возврат значения -1 если что-то пошло не так из функции print_recursion
+            // !! можно сделать возврат значения -1 если что-то
+            // пошло не так из функции print_recursion
             print_recursion(num);
 
             break;
