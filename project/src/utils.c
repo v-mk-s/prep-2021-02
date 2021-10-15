@@ -20,18 +20,24 @@ size_t timer_from(int from) {
     return counter;
 }
 
+// быстрое возведение в степень работает за O(log(n)) умножений
 int custom_pow(int base, int power) {
     // 0^0 = 1
-    // (-n)^k
 
     // быстрое возведение в степень
-	int res = 1;
+	int result = 1;
 	while (power) {
-		if (power & 1)  // если нечетное -> true
-			res *= base;
-		base *= base;
-		power >>= 1;
+		if (power & 1)  // если текущая power нечетная, то true
+			result *= base;
+
+        /* на этом этапе power - четная, основание возводим в 
+         * квадрат и сокращаем количество умножений в 2 раза
+         * base^power = (base*base)^(power/2)
+         * */
+        base *= base;
+		power >>= 1;  // power/2
 	}
 
-    return res;
+    return result;
 }
+

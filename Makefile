@@ -5,8 +5,8 @@ HDRS_DIR = project/include
 SRCS = \
        project/src/main.c \
        project/src/utils.c \
-	   project/src/prime.c \
-	   project/src/print_recursion.c
+       project/src/prime.c \
+       project/src/print_recursion.c
 
 .PHONY: all build rebuild check test clean
 
@@ -29,3 +29,4 @@ test: $(TARGET)
 
 clean:
 	rm -rf $(TARGET)
+

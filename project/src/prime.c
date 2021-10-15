@@ -3,14 +3,14 @@
 #include "prime.h"
 
 #include <stddef.h>
-#include <tgmath.h> /* sqrt */
+#include <math.h> /* sqrt */
 
 size_t custom_prime(long long num) {
     if (num < 2) return (size_t) 0;
-    // работает за O(sqrt(n))
 
+	// работает за O(sqrt(n))
 	for(long long i = 2; i <= sqrt(num); ++i)
-		if(!num%i)  // num%i == 0
+		if(!num%i)
 			return (size_t) 0;
 	return (size_t) 1;
 }
