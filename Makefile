@@ -4,14 +4,18 @@ HDRS_DIR = project/include
 # XXX: Don't forget backslash at the end of any line except the last one
 SRCS = \
        project/src/main.c \
-       project/src/utils.c
+       project/src/utils.c \
+       project/src/prime.c \
+       project/src/print_recursion.c
 
 .PHONY: all build rebuild check test clean
 
 all: clean check test
 
+# -lm компилятор говорит 
+# компоновщику look in libm, check to see if it has any functions that we haven't found yet
 $(TARGET): $(SRCS) 
-	$(CC) -Wpedantic -Wall -Wextra -Werror -I $(HDRS_DIR) -o $(TARGET) $(CFLAGS) $(SRCS)
+	$(CC) -Wpedantic -Wall -Wextra -Werror -I $(HDRS_DIR) -o $(TARGET) $(CFLAGS) $(SRCS) -lm
 
 build: $(TARGET)
 
@@ -25,3 +29,4 @@ test: $(TARGET)
 
 clean:
 	rm -rf $(TARGET)
+
