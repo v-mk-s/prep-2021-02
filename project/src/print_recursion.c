@@ -5,44 +5,16 @@
 #include <stddef.h>
 #include <stdio.h>
 
-void print_recursion(int n) {
-    // если не очевидна данная реализация, смотрите код ниже
-    if (n != 1) {
-        if (n > 1) {
-            print_recursion(n-1);
+void serial_number_print_to(int to) {
+    if (to != 1) {
+        if (to > 1) {
+            serial_number_print_to(to-1);
         } else {
-            print_recursion(n+1);
+            serial_number_print_to(to+1);
         }
-        printf(" %d", n);
+        printf(" %d", to);
     } else {
-        printf("%d", n);
+        printf("%d", to);
     }
 }
-
-/* //понятная рекурсия
-void print_recursion(int n) {
-    if (n != 1) {
-        if (n > 1) print_recursion(n-1);
-        else print_recursion(n+1);
-    }
-    
-    // нужно чтобы в конце не выводился лишний символ пробела
-    if (n == 1) printf("%d", n);
-    else printf(" %d", n);
-} */
-
-
-/* //не рекурсия
-void print_recursion(int n) {
-    if (n > 1) {
-        for (int i=n; i > 1; --i)
-            printf("%d ", i);
-    } else {
-        for (int i=n; i < 1; ++i)
-            printf("%d ", i);
-    }
-    
-    // последняя всегда 1ца, можно вынести из условия if и после нее нет пробела
-    printf("%d", 1);
-} */
 

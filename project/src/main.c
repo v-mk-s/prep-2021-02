@@ -10,25 +10,11 @@
 #define ERR_WRONG_FLG (-2)
 #define ERR_STRTOL    (-3)
 
-#define TST_FOO_FIX     1
-#define TST_FOO_IMPL    2
-#define TST_MOD_IMPL    3
-#define TST_MOD_4       4
+#define TST_FOO_FIX                 1
+#define TST_FOO_IMPL                2
+#define TST_MOD_IMPL                3
+#define TST_SERIAL_NUMBERS_FUNC     4
 
-/* NOTE(stitaevskiy):
- * We use `atoi` function just for simplification and code reducing.
- * This function doesn't report conversation errors.
- * For safety program we recommend using `strtol` and its analogs.
- * (See `man atoi` and `man strtol` for more info).
- *
- * const char str_num[] = "1234";
- * char* end = NULL;
- * int val = (int) strtol(str_num, &end, 0);
- * if (end != '\0') {
- *     //ERROR
- * }
- *
- * */
 
 int main(int argc, const char** argv) {
     char* end = NULL;
@@ -37,7 +23,7 @@ int main(int argc, const char** argv) {
         return ERR_ARGS_COUNT;
     }
 
-    // заменил atoi на strtol, повысил безопасность кода, об этом написано в заметке выше
+    // заменил atoi на strtol, повысил безопасность кода
     int test_case = (int) strtol(argv[1], &end, 0);
     if (*end != '\0') {
         return ERR_STRTOL;
@@ -91,14 +77,14 @@ int main(int argc, const char** argv) {
 
             break;
         }
-        case TST_MOD_4: {
+        case TST_SERIAL_NUMBERS_FUNC: {
             end = NULL;
             int num = (int) strtol(data, &end, 0);
             if (*end != '\0') {
                 return ERR_STRTOL;
             }
 
-            print_recursion(num);
+            serial_number_print_to(num);
 
             break;
         }
