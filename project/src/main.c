@@ -32,7 +32,7 @@ int main(int argc, const char** argv) {
     const char* data = argv[2];
 
     switch (test_case) {
-        case CASE_1_TIMER_FROM_FUNC: {
+        case CASE_TIMER_FROM_FUNC: {
             end = NULL;
             int to = (int) strtol(data, &end, 0);
             if (*end != '\0') {
@@ -43,7 +43,7 @@ int main(int argc, const char** argv) {
 
             break;
         }
-        case CASE_2_CUSTOM_POW_FUNC: {
+        case CASE_CUSTOM_POW_FUNC: {
             if (argc == 4) {
                 end = NULL;
                 int base = (int) strtol(data, &end, 0);
@@ -66,7 +66,7 @@ int main(int argc, const char** argv) {
 
             break;
         }
-        case CASE_3_CUSTOM_PRIME_FUNC: {
+        case CASE_CUSTOM_PRIME_FUNC: {
             end = NULL;
             int num = (int) strtol(data, &end, 0);
             if (*end != '\0') {
@@ -77,7 +77,7 @@ int main(int argc, const char** argv) {
 
             break;
         }
-        case CASE_4_SERIAL_NUMBERS_FUNC: {
+        case CASE_SERIAL_NUMBERS_FUNC: {
             end = NULL;
             int num = (int) strtol(data, &end, 0);
             if (*end != '\0') {
