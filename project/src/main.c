@@ -59,7 +59,8 @@ int main() {
                 break;
             }
         }
-        printf("%s", "\nActions\n1 Enter client data\n2 Enter transaction data\n3 Update base\nEnter action: ");
+        printf("%s", "\nActions\n1 Enter client data\n2 Enter transaction data
+                \n3 Update base\nEnter action: ");
     }
     return 0;
 }
