@@ -30,3 +30,4 @@ memtest: $(TARGET)
 
 clean:
 	rm -rf $(TARGET) *.dat
+
