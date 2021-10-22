@@ -6,14 +6,14 @@
 #define filename_blackrecord "blackrecord.dat"
 
 typedef struct {
-	int number;
-	char name[20];
-	char surname[20];
-	char address[30];
-	char phone_number[15];
-	double indebtedness;
-	double credit_limit;
-	double cash_payments;
+    int number;
+    char name[20];
+    char surname[20];
+    char address[30];
+    char phone_number[15];
+    double indebtedness;
+    double credit_limit;
+    double cash_payments;
 } Data;
 
 #endif  // PROJECT_INCLUDE_UTILS_H_
