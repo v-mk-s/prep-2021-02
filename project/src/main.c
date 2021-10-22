@@ -17,7 +17,8 @@ int main() {
     FILE *p_blackrecord = NULL;
     Data data_record = {0};
     Data data_transaction = {0};
-    printf("%s", "\nActions\n1 Enter client data\n2 Enter transaction data\n3 Update base\nEnter action:\n");
+    printf("\n%s\n%s\n%s\n%s\n%s\n", "Actions", "1 Enter client data",
+            "2 Enter transaction data", "3 Update base", "Enter action:");
     while (scanf("%d", &choice) != -1) {
         switch (choice) {
             case CASE_INPUT_CLIENT: {
@@ -59,8 +60,8 @@ int main() {
                 break;
             }
         }
-        printf("%s", "\nActions", "\n1 Enter client data", "\n2 Enter transaction data",
-                "\n3 Update base", "\nEnter action: ");
+        printf("\n%s\n%s\n%s\n%s\n%s\n", "Actions", "1 Enter client data",
+                "2 Enter transaction data", "3 Update base", "Enter action:");
     }
     return 0;
 }
