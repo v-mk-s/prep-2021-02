@@ -22,7 +22,7 @@ int main() {
     while (scanf("%d", &choice) != -1) {
         switch (choice) {
             case CASE_INPUT_CLIENT: {
-                p_record = fopen(filename_record, "r+");
+                p_record = fopen(filename_record, "w+");
                 if (p_record == NULL) {
                     puts("No access\n");
                 } else {
@@ -32,7 +32,7 @@ int main() {
                 break;
             }
             case CASE_INPUT_TRANSACTION: {
-                p_record = fopen(filename_transaction, "r+");
+                p_record = fopen(filename_transaction, "w+");
                 if (p_record == NULL) {
                     puts("No access\n");
                 } else {
