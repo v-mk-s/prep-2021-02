@@ -4,9 +4,8 @@ HDRS_DIR = project/include
 SRCS = \
        project/src/main.c \
        project/src/utils.c \
-       project/src/write_funcs.c \
-       project/src/upd_funcs.c \
-       project/src/test.c
+       project/src/write_to_db_funcs.c \
+       project/src/upd_funcs.c
 
 .PHONY: all build rebuild check test memtest clean
 
