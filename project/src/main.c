@@ -1,58 +1,55 @@
-#include "main.h"
 #include "utils.h"
 #include "write_funcs.h"
 #include "upd_funcs.h"
-#include "test.h"
-
 #include <stdio.h>
 
-#define CASE_INPUT_CLIENT       1
-#define CASE_INPUT_TRANSACTION  2
-#define CASE_UPD_BASE           3
+#define CASE_INPUT_DB_CLIENTS    1
+#define CASE_ADD_TRANSACTIONS    2
+#define CASE_UPD_CREDIT_LIMIT    3
 
 int main() {
-    int choice = 0;
-    FILE *p_record = NULL;
-    FILE *p_transaction = NULL;
-    FILE *p_blackrecord = NULL;
-    Data data_record = {0};
+    int choice_action = 0;
+    FILE *p_db_clients = NULL;
+    FILE *p_transactions = NULL;
+    FILE *p_db_clients_backup = NULL;
+    Data data_client = {0};
     Data data_transaction = {0};
     printf("\n%s\n%s\n%s\n%s\n%s\n", "Actions", "1 Enter client data",
             "2 Enter transaction data", "3 Update base", "Enter action:");
-    while (scanf("%d", &choice) != -1) {
-        switch (choice) {
-            case CASE_INPUT_CLIENT: {
-                p_record = fopen(filename_record, "w+");
-                if (p_record == NULL) {
+    while (scanf("%d", &choice_action) != -1) {
+        switch (choice_action) {
+            case CASE_INPUT_DB_CLIENTS: {
+                p_db_clients = fopen(FILENAME_DB_CLIENTS, "w+");
+                if (p_db_clients == NULL) {
                     puts("No access\n");
                 } else {
-                    record_write(p_record, data_record);
-                    fclose(p_record);
+                    write_db_clients(p_db_clients, data_client);
                 }
+                fclose(p_db_clients);
                 break;
             }
-            case CASE_INPUT_TRANSACTION: {
-                p_record = fopen(filename_transaction, "w+");
-                if (p_record == NULL) {
+            case CASE_ADD_TRANSACTIONS: {
+                p_transactions = fopen(FILENAME_TRANSACTION, "w+");
+                if (p_transactions == NULL) {
                     puts("No access\n");
                 } else {
-                    transaction_write(p_record, data_transaction);
-                    fclose(p_record);
+                    write_transactions(p_transactions, data_transaction);
                 }
+                fclose(p_transactions);
                 break;
             }
-            case CASE_UPD_BASE: {
-                p_record = fopen(filename_record, "r");
-                p_transaction = fopen(filename_transaction, "r");
-                p_blackrecord = fopen(filename_blackrecord, "w");
-                if ((p_record == NULL) || (p_transaction == NULL) || (p_blackrecord == NULL)) {
+            case CASE_UPD_CREDIT_LIMIT: {
+                p_db_clients = fopen(FILENAME_DB_CLIENTS, "r");
+                p_transactions = fopen(FILENAME_TRANSACTION, "r");
+                p_db_clients_backup = fopen(FILENAME_DB_CLIENTS_BACKUP, "w");
+                if ((p_db_clients == NULL) || (p_transactions == NULL) || (p_db_clients_backup == NULL)) {
                     puts("No access\nexit\n");
                 } else {
-                    upd_base(p_record, p_transaction, p_blackrecord, data_record, data_transaction);
-                    fclose(p_record);
-                    fclose(p_transaction);
-                    fclose(p_blackrecord);
+                    upd_credit_limit_and_backup(p_db_clients, p_transactions, p_db_clients_backup, data_client, data_transaction);
                 }
+                fclose(p_db_clients);
+                fclose(p_transactions);
+                fclose(p_db_clients_backup);
                 break;
             }
             default: {
