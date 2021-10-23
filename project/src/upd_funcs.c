@@ -6,7 +6,7 @@ void upd_credit_limit_and_backup(FILE *p_db_clients, FILE *p_transactions, FILE 
         Data data_client, Data data_transaction) {
     while ((fscanf(p_db_clients, "%d%19s%19s%29s%14s", &data_client.number,  data_client.name,
             data_client.surname, data_client.address, data_client.phone_number) != -1) &&
-			(fscanf(p_db_clients, "%lf%lf%lf", &data_client.indebtedness,
+            (fscanf(p_db_clients, "%lf%lf%lf", &data_client.indebtedness,
             &data_client.credit_limit, &data_client.cash_payments) != -1)) {
         while (fscanf(p_transactions, "%d %lf", &data_transaction.number,
                 &data_transaction.cash_payments) != -1) {
