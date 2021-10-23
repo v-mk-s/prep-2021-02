@@ -14,9 +14,10 @@ void upd_credit_limit_and_backup(FILE *p_db_clients, FILE *p_transactions, FILE 
                 data_client.credit_limit += data_transaction.cash_payments;
             }
         }
-        fprintf(p_db_clients_backup, "%-12d%-11s%-11s%-16s%20s%12.2f%12.2f%12.2f\n", data_client.number,
-                data_client.name, data_client.surname, data_client.address, data_client.phone_number,
-                data_client.indebtedness, data_client.credit_limit, data_client.cash_payments);
+        fprintf(p_db_clients_backup, "%-12d%-11s%-11s%-16s%20s", data_client.number,
+                data_client.name, data_client.surname, data_client.address, data_client.phone_number);
+        fprintf(p_db_clients_backup, "%12.2f%12.2f%12.2f\n", data_client.indebtedness,
+                data_client.credit_limit, data_client.cash_payments);
         rewind(p_transactions);
     }
 }

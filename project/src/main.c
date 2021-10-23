@@ -1,5 +1,5 @@
 #include "utils.h"
-#include "write_funcs.h"
+#include "write_to_db_funcs.h"
 #include "upd_funcs.h"
 #include <stdio.h>
 
@@ -24,8 +24,8 @@ int main() {
                     puts("No access\n");
                 } else {
                     write_db_clients(p_db_clients, data_client);
+                    fclose(p_db_clients);
                 }
-                fclose(p_db_clients);
                 break;
             }
             case CASE_ADD_TRANSACTIONS: {
@@ -34,8 +34,8 @@ int main() {
                     puts("No access\n");
                 } else {
                     write_transactions(p_transactions, data_transaction);
+                    fclose(p_transactions);
                 }
-                fclose(p_transactions);
                 break;
             }
             case CASE_UPD_CREDIT_LIMIT: {
@@ -44,12 +44,16 @@ int main() {
                 p_db_clients_backup = fopen(FILENAME_DB_CLIENTS_BACKUP, "w");
                 if ((p_db_clients == NULL) || (p_transactions == NULL) || (p_db_clients_backup == NULL)) {
                     puts("No access\nexit\n");
+                    if (p_db_clients != NULL) fclose(p_db_clients);
+                    if (p_transactions != NULL) fclose(p_transactions);
+                    if (p_db_clients_backup != NULL) fclose(p_db_clients_backup);
                 } else {
-                    upd_credit_limit_and_backup(p_db_clients, p_transactions, p_db_clients_backup, data_client, data_transaction);
+                    upd_credit_limit_and_backup(p_db_clients, p_transactions, p_db_clients_backup,
+                            data_client, data_transaction);
+                    fclose(p_db_clients);
+                    fclose(p_transactions);
+                    fclose(p_db_clients_backup);
                 }
-                fclose(p_db_clients);
-                fclose(p_transactions);
-                fclose(p_db_clients_backup);
                 break;
             }
             default: {
