@@ -10,6 +10,6 @@
  * обновление кредитного лимита клиентов (изменение репутации клиентов в глазах банка)
  * */
 void upd_credit_limit_and_backup(FILE *p_db_clients, FILE *p_transactions, FILE *p_db_clients_backup,
-        Data data_client, Data data_transaction);
+        Data *data_client, Data *data_transaction);
 
 #endif  // PROJECT_INCLUDE_UPD_FUNCS_H_

@@ -14,16 +14,21 @@ int main() {
     FILE *p_db_clients_backup = NULL;
     Data data_client = {0};
     Data data_transaction = {0};
-    printf("\n%s\n%s\n%s\n%s\n%s\n", "Actions", "1 Enter client data",
-            "2 Enter transaction data", "3 Update base", "Enter action:");
-    while (scanf("%d", &choice_action) != -1) {
+    printf("\n%s\n%s\n%s\n%s\n%s\n%s\n",
+            "Actions",
+            "1 Enter client data",
+            "2 Enter transaction data",
+            "3 Update base",
+            "4 Quit",
+            "Enter action: ");
+    while ((scanf("%d", &choice_action) != -1) && (choice_action != 4)) {
         switch (choice_action) {
             case CASE_INPUT_DB_CLIENTS: {
                 p_db_clients = fopen(FILENAME_DB_CLIENTS, "w+");
                 if (p_db_clients == NULL) {
-                    puts("No access\n");
+                    puts("No access to file\n");
                 } else {
-                    write_db_clients(p_db_clients, data_client);
+                    write_db_clients(p_db_clients, &data_client);
                     fclose(p_db_clients);
                 }
                 break;
@@ -31,9 +36,9 @@ int main() {
             case CASE_ADD_TRANSACTIONS: {
                 p_transactions = fopen(FILENAME_TRANSACTION, "w+");
                 if (p_transactions == NULL) {
-                    puts("No access\n");
+                    puts("No access to file\n");
                 } else {
-                    write_transactions(p_transactions, data_transaction);
+                    write_transactions(p_transactions, &data_transaction);
                     fclose(p_transactions);
                 }
                 break;
@@ -43,13 +48,13 @@ int main() {
                 p_transactions = fopen(FILENAME_TRANSACTION, "r");
                 p_db_clients_backup = fopen(FILENAME_DB_CLIENTS_BACKUP, "w");
                 if ((p_db_clients == NULL) || (p_transactions == NULL) || (p_db_clients_backup == NULL)) {
-                    puts("No access\nexit\n");
+                    puts("No access to files\nexit\n");
                     if (p_db_clients != NULL) fclose(p_db_clients);
                     if (p_transactions != NULL) fclose(p_transactions);
                     if (p_db_clients_backup != NULL) fclose(p_db_clients_backup);
                 } else {
                     upd_credit_limit_and_backup(p_db_clients, p_transactions, p_db_clients_backup,
-                            data_client, data_transaction);
+                            &data_client, &data_transaction);
                     fclose(p_db_clients);
                     fclose(p_transactions);
                     fclose(p_db_clients_backup);
@@ -57,12 +62,19 @@ int main() {
                 break;
             }
             default: {
-                puts("Unknown error\n");
+                puts("Enter correct action\n");
                 break;
             }
         }
-        printf("\n%s\n%s\n%s\n%s\n%s\n", "Actions", "1 Enter client data",
-                "2 Enter transaction data", "3 Update base", "Enter action:");
+        printf("\n%s\n%s\n%s\n%s\n%s\n%s\n",
+                "Actions",
+                "1 Enter client data",
+                "2 Enter transaction data",
+                "3 Update base",
+                "4 Quit",
+                "Enter action: ");
     }
+
+    puts("Quit\n");
     return 0;
 }
