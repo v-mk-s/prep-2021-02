@@ -10,10 +10,12 @@
 #define ERR_WRONG_FLG (-2)
 #define ERR_STRTOL    (-3)
 
-#define CASE_TIMER_FROM_FUNC       1
-#define CASE_CUSTOM_POW_FUNC       2
-#define CASE_CUSTOM_PRIME_FUNC     3
-#define CASE_SERIAL_NUMBERS_FUNC   4
+typedef enum {
+    CASE_TIMER_FROM_FUNC =     1,
+    CASE_CUSTOM_POW_FUNC =     2,
+    CASE_CUSTOM_PRIME_FUNC =   3,
+    CASE_SERIAL_NUMBERS_FUNC = 4
+} Case_main;
 
 
 int main(int argc, const char** argv) {
