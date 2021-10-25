@@ -1,6 +1,6 @@
 #include "utils.h"
-#include "write_to_db_funcs.h"
-#include "upd_funcs.h"
+#include "write_to_db_functions.h"
+#include "update_functions.h"
 #include <stdio.h>
 
 #define CASE_INPUT_DB_CLIENTS    1
@@ -12,8 +12,11 @@ int main() {
     FILE *p_db_clients = NULL;
     FILE *p_transactions = NULL;
     FILE *p_db_clients_backup = NULL;
-    Data data_client = {0};
-    Data data_transaction = {0};
+    Data data_client = {.number = 0, .name = "", .surname = "", .address = "", .phone_number = "",
+            .indebtedness = 0, .credit_limit = 0, .cash_payments = 0};
+    Data data_transaction = {.number = 0, .name = "", .surname = "", .address = "", .phone_number = "",
+            .indebtedness = 0, .credit_limit = 0, .cash_payments = 0};
+
     printf("\n%s\n%s\n%s\n%s\n%s\n%s\n",
             "Actions",
             "1 Enter client data",
@@ -21,7 +24,7 @@ int main() {
             "3 Update base",
             "4 Quit",
             "Enter action: ");
-    while ((scanf("%d", &choice_action) != -1) && (choice_action != 4)) {
+    while ((scanf("%d", &choice_action) != EOF) && (choice_action != 4)) {
         switch (choice_action) {
             case CASE_INPUT_DB_CLIENTS: {
                 p_db_clients = fopen(FILENAME_DB_CLIENTS, "w+");
@@ -53,7 +56,7 @@ int main() {
                     if (p_transactions != NULL) fclose(p_transactions);
                     if (p_db_clients_backup != NULL) fclose(p_db_clients_backup);
                 } else {
-                    upd_credit_limit_and_backup(p_db_clients, p_transactions, p_db_clients_backup,
+                    update_credit_limit_and_backup(p_db_clients, p_transactions, p_db_clients_backup,
                             &data_client, &data_transaction);
                     fclose(p_db_clients);
                     fclose(p_transactions);

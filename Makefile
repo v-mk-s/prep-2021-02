@@ -4,9 +4,8 @@ HDRS_DIR = project/include
 
 SRCS = \
        project/src/main.c \
-       project/src/utils.c \
-       project/src/write_to_db_funcs.c \
-       project/src/upd_funcs.c
+       project/src/write_to_db_functions.c \
+       project/src/update_functions.c
 
 .PHONY: all build rebuild check test memtest clean
 
@@ -38,23 +37,22 @@ TEST_HDRS_DIR = test_project/include
 
 TEST_SRCS = \
        test_project/src/main.c \
-       test_project/src/utils.c \
        test_project/src/test.c
 
-.PHONY: my_all my_build my_rebuild my_test my_clean
+.PHONY: all_test build_test rebuild_test test_read_and_write clean_test
 
-my_all: my_clean my_test
+all_test: clean_test test_read_and_write
 
 $(TEST_TARGET): $(TEST_SRCS)
 	$(CC) -Wpedantic -Wall -Wextra -Werror -I $(TEST_HDRS_DIR) -o $(TEST_TARGET) $(CFLAGS) $(TEST_SRCS)
 
-my_build: $(TEST_TARGET)
+build_test: $(TEST_TARGET)
 
-my_rebuild: my_clean my_build
+rebuild_test: clean_test build_test
 
-my_test: $(TEST_TARGET)
+test_read_and_write: $(TEST_TARGET)
 	$(TEST_TARGET)
 
-my_clean:
+clean_test:
 	rm -rf $(TEST_TARGET) *.dat
 

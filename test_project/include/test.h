@@ -13,6 +13,6 @@ void write_to_file(const char *filename, Data *data);
 // cчитывает из filename данные в data
 void read_from_file(const char *filename, Data *data);
 // сравнение 2х структур Data
-int compare_Data(const Data *expected_data, const Data *got_data);
+int compare_data(const Data *expected_data, const Data *got_data);
 
 #endif  // PROJECT_INCLUDE_TEST_H_

@@ -5,15 +5,16 @@
 
 void test_write_to_file(const char *filename) {
     if (!strncmp(filename, FILENAME_DB_CLIENTS, 80)) {
-        Data expected_data = {1, "name1", "surname1", "address1", "phone1", 80, 200, 50};
-        // 1 1 name1 surname1 address1 phone1 80 200 50
+        Data expected_data = {.number = 1, .name = "name1", .surname = "surname1", .address = "address1",
+                .phone_number = "phone1", .indebtedness = 80, .credit_limit = 200, .cash_payments = 50};
 
         write_to_file(filename, &expected_data);
 
-        Data got_data = {0};
+        Data got_data = {.number = 0, .name = "", .surname = "", .address = "", .phone_number = "",
+                .indebtedness = 0, .credit_limit = 0, .cash_payments = 0};
 	    read_from_file(filename, &got_data);
 
-        if (compare_Data(&expected_data, &got_data) != -1) {
+        if (compare_data(&expected_data, &got_data) != -1) {
             puts("***** TEST SUCCEED *****\n");
         } else {
             puts("Files mismatches\n");
@@ -56,7 +57,7 @@ void read_from_file(const char *filename, Data *data) {
     };
 }
 
-int compare_Data(const Data *expected_data, const Data *got_data) {
+int compare_data(const Data *expected_data, const Data *got_data) {
     if ((expected_data->number == got_data->number) &&
         !strncmp(expected_data->name, got_data->name, 80) &&
         !strncmp(expected_data->surname, got_data->surname, 80) &&

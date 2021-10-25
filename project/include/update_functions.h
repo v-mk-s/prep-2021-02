@@ -1,5 +1,5 @@
-#ifndef PROJECT_INCLUDE_UPD_FUNCS_H_
-#define PROJECT_INCLUDE_UPD_FUNCS_H_
+#ifndef PROJECT_INCLUDE_UPDATE_FUNCTIONS_H_
+#define PROJECT_INCLUDE_UPDATE_FUNCTIONS_H_
 
 #include "utils.h"
 #include <stdio.h>
@@ -9,7 +9,7 @@
  * БД (FILENAME_DB_CLIENTS_BACKUP)
  * обновление кредитного лимита клиентов (изменение репутации клиентов в глазах банка)
  * */
-void upd_credit_limit_and_backup(FILE *p_db_clients, FILE *p_transactions, FILE *p_db_clients_backup,
+void update_credit_limit_and_backup(FILE *p_db_clients, FILE *p_transactions, FILE *p_db_clients_backup,
         Data *data_client, Data *data_transaction);
 
-#endif  // PROJECT_INCLUDE_UPD_FUNCS_H_
+#endif  // PROJECT_INCLUDE_UPDATE_FUNCTIONS_H_
