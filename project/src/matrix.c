@@ -397,19 +397,16 @@ int det(const Matrix* matrix, double* val) {
     }
 
     Matrix* return_matrix = NULL;
-    return_matrix = create_matrix(rows-1, rows-1);
-    if (!return_matrix) {
-        return NULL_MATRIX;
-    }
-
     double determinant = 0;
     double det_without_row_and_col = 0;
     int degree = 1;
     for (size_t i = 0; i < rows; ++i) {
+        if (return_matrix) free_matrix(return_matrix);
         return_matrix = matrix_without_row_and_col(matrix, 0, i);
 
         size_t error = det(return_matrix, &det_without_row_and_col);
         if (error) {
+            if (return_matrix) free_matrix(return_matrix);
             return NON_STANDARD_ERROR;
         }
         determinant += degree * matrix->vals[0][i] * det_without_row_and_col;
@@ -417,7 +414,7 @@ int det(const Matrix* matrix, double* val) {
         degree = -degree;
     }
 
-    free_matrix(return_matrix);
+    if (return_matrix) free_matrix(return_matrix);
     *val = determinant;
     return 0;
 }
