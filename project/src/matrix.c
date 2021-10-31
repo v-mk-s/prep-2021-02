@@ -90,6 +90,10 @@ Matrix* create_matrix(size_t rows, size_t cols) {
         matrix_zero->values[i] = NULL;
         matrix_zero->values[i] = (double*) malloc(cols * sizeof(double));
         if (!matrix_zero->values[i]) {
+            for (size_t j = 0; j < i; ++j) {
+                free(matrix_zero->values[j]);
+            }
+            free(matrix_zero->values);
             free(matrix_zero);
             return NULL_POINTER;
         }
