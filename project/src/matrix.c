@@ -90,7 +90,7 @@ Matrix* create_matrix(size_t rows, size_t cols) {
         matrix_zero->values[i] = NULL;
         matrix_zero->values[i] = (double*) malloc(cols * sizeof(double));
         if (!matrix_zero->values[i]) {
-            free_matrix(matrix_zero);
+            free(matrix_zero);
             return NULL_POINTER;
         }
     }
@@ -482,7 +482,7 @@ Matrix* inv(const Matrix* matrix) {
         return NULL_POINTER;
     }
 
-    // если определитель = 0 -> NULL_POINTER
+    // если определитель = 0 -> NULL
     double determinant = 0;
     int error = det(matrix, &determinant);
     if (error || (fabs(determinant) < EPS)) {
