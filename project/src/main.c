@@ -6,13 +6,13 @@
 // #define FILENAME_MATRIX_C "matrix_C_4_2.dat"
 
 int main(void) {
-    Matrix* A = NULL;
+    Matrix* A = NULL_POINTER;
     A = create_matrix_from_file("in.txt");
 
-    Matrix* B = NULL;
+    Matrix* B = NULL_POINTER;
     B = create_matrix_from_file("out.txt");
 
-    Matrix* C = NULL;
+    Matrix* C = NULL_POINTER;
     C = adj(A);
 
     if (!A || !B || !C) {
