@@ -19,7 +19,7 @@ Matrix* create_matrix_from_file(const char* path_file) {
     file_matrix_data = fopen(path_file, "r");
     if (!file_matrix_data) {
         puts("ERROR READ FROM FILE!");
-        return NULL_POINTER;
+        return EMPTY_MATRIX_ERROR;
     }
 
     int check_matrix_dim = fscanf(file_matrix_data, "%zu%zu", &rows, &cols);
@@ -32,7 +32,7 @@ Matrix* create_matrix_from_file(const char* path_file) {
             puts("ERROR invalid file (false structure)!");
         }
         fclose(file_matrix_data);
-        return NULL_POINTER;
+        return EMPTY_MATRIX_ERROR;
     }
 
     // создание указателя на структуру Matrix и инициализация
@@ -40,13 +40,20 @@ Matrix* create_matrix_from_file(const char* path_file) {
     matrix_from_file = create_matrix(rows, cols);
     if (!matrix_from_file) {
         fclose(file_matrix_data);
-        return NULL_POINTER;
+        return EMPTY_MATRIX_ERROR;
     }
 
     // инициализация матрицы из файла
     for (size_t i = 0; i < rows; ++i) {
         for (size_t j = 0; j < cols; ++j) {
-            fscanf(file_matrix_data, "%lf", &matrix_from_file->values[i][j]);
+            int check_value = fscanf(file_matrix_data, "%lf", &matrix_from_file->values[i][j]);
+            if (check_value == EOF) {
+                puts("READ ERROR invalid file, there is error in values!");
+
+                free_matrix(matrix_from_file);
+                fclose(file_matrix_data);
+                return EMPTY_MATRIX_ERROR;
+            }
         }
     }
 
@@ -58,7 +65,7 @@ Matrix* create_matrix_from_file(const char* path_file) {
 
         free_matrix(matrix_from_file);
         fclose(file_matrix_data);
-        return NULL_POINTER;
+        return EMPTY_MATRIX_ERROR;
     }
 
     fclose(file_matrix_data);
@@ -67,13 +74,13 @@ Matrix* create_matrix_from_file(const char* path_file) {
 
 Matrix* create_matrix(size_t rows, size_t cols) {
     if ((!rows) || (!cols)) {
-        return NULL_POINTER;
+        return EMPTY_MATRIX_ERROR;
     }
 
     Matrix* matrix_zero = NULL;
     matrix_zero = (Matrix*) malloc(sizeof(Matrix));
     if (!matrix_zero) {
-        return NULL_POINTER;
+        return EMPTY_MATRIX_ERROR;
     }
 
     matrix_zero->rows = rows;
@@ -83,7 +90,7 @@ Matrix* create_matrix(size_t rows, size_t cols) {
     matrix_zero->values = (double**) malloc(rows * sizeof(double*));
     if (!matrix_zero->values) {
         free(matrix_zero);
-        return NULL_POINTER;
+        return EMPTY_MATRIX_ERROR;
     }
 
     for (size_t i = 0; i < rows; ++i) {
@@ -95,7 +102,7 @@ Matrix* create_matrix(size_t rows, size_t cols) {
             }
             free(matrix_zero->values);
             free(matrix_zero);
-            return NULL_POINTER;
+            return EMPTY_MATRIX_ERROR;
         }
     }
 
@@ -144,7 +151,7 @@ int print(const Matrix* matrix) {
 
 Matrix* copy(const Matrix* matrix) {
     if (!matrix) {
-        return NULL_POINTER;
+        return EMPTY_MATRIX_ERROR;
     }
 
     size_t rows = matrix->rows;
@@ -153,7 +160,7 @@ Matrix* copy(const Matrix* matrix) {
     Matrix* return_matrix = NULL;
     return_matrix = create_matrix(rows, cols);
     if (!return_matrix) {
-        return NULL_POINTER;
+        return EMPTY_MATRIX_ERROR;
     }
 
     for (size_t i = 0; i < rows; ++i) {
@@ -166,18 +173,18 @@ Matrix* copy(const Matrix* matrix) {
 
 Matrix* matrix_minor(const Matrix* matrix, size_t row, size_t col) {
     if (!matrix) {
-        return NULL_POINTER;
+        return EMPTY_MATRIX_ERROR;
     }
 
     if (matrix->rows != matrix->cols) {
-        return NULL_POINTER;
+        return EMPTY_MATRIX_ERROR;
     }
 
     size_t rows = matrix->rows;
     Matrix* return_matrix = NULL;
     return_matrix = create_matrix(rows-1, rows-1);
     if (!return_matrix) {
-        return NULL_POINTER;
+        return EMPTY_MATRIX_ERROR;
     }
 
     size_t offset_row = 0;
@@ -260,7 +267,7 @@ int set_elem(Matrix* matrix, size_t row, size_t col, double val) {
 // Math operations
 Matrix* mul_scalar(const Matrix* matrix, double val) {
     if (!matrix) {
-        return NULL_POINTER;
+        return EMPTY_MATRIX_ERROR;
     }
 
     size_t rows = matrix->rows;
@@ -269,7 +276,7 @@ Matrix* mul_scalar(const Matrix* matrix, double val) {
     Matrix* return_matrix = NULL;
     return_matrix = copy(matrix);
     if (!return_matrix) {
-        return NULL_POINTER;
+        return EMPTY_MATRIX_ERROR;
     }
 
     for (size_t i = 0; i < rows; ++i) {
@@ -282,7 +289,7 @@ Matrix* mul_scalar(const Matrix* matrix, double val) {
 
 Matrix* transp(const Matrix* matrix) {
     if (!matrix) {
-        return NULL_POINTER;
+        return EMPTY_MATRIX_ERROR;
     }
 
     size_t rows = matrix->rows;
@@ -291,7 +298,7 @@ Matrix* transp(const Matrix* matrix) {
     Matrix* return_matrix = NULL;
     return_matrix = create_matrix(cols, rows);
     if (!return_matrix) {
-        return NULL_POINTER;
+        return EMPTY_MATRIX_ERROR;
     }
 
     for (size_t i = 0; i < rows; ++i) {
@@ -305,20 +312,20 @@ Matrix* transp(const Matrix* matrix) {
 
 Matrix* sum(const Matrix* left, const Matrix* right) {
     if (!left || !right) {
-        return NULL_POINTER;
+        return EMPTY_MATRIX_ERROR;
     }
 
     size_t rows = left->rows;
     size_t cols = left->cols;
 
     if ((right->rows != rows) || (right->cols != cols)) {
-        return NULL_POINTER;
+        return EMPTY_MATRIX_ERROR;
     }
 
     Matrix* return_matrix = NULL;
     return_matrix = copy(left);
     if (!return_matrix) {
-        return NULL_POINTER;
+        return EMPTY_MATRIX_ERROR;
     }
 
     for (size_t i = 0; i < rows; ++i) {
@@ -331,20 +338,20 @@ Matrix* sum(const Matrix* left, const Matrix* right) {
 
 Matrix* sub(const Matrix* left, const Matrix* right) {
     if (!left || !right) {
-        return NULL_POINTER;
+        return EMPTY_MATRIX_ERROR;
     }
 
     size_t rows = left->rows;
     size_t cols = left->cols;
 
     if ((right->rows != rows) || (right->cols != cols)) {
-        return NULL_POINTER;
+        return EMPTY_MATRIX_ERROR;
     }
 
     Matrix* return_matrix = NULL;
     return_matrix = copy(left);
     if (!return_matrix) {
-        return NULL_POINTER;
+        return EMPTY_MATRIX_ERROR;
     }
 
     for (size_t i = 0; i < rows; ++i) {
@@ -357,7 +364,7 @@ Matrix* sub(const Matrix* left, const Matrix* right) {
 
 Matrix* mul(const Matrix* left, const Matrix* right) {
     if (!left || !right) {
-        return NULL_POINTER;
+        return EMPTY_MATRIX_ERROR;
     }
 
     size_t l_rows = left->rows;
@@ -366,13 +373,13 @@ Matrix* mul(const Matrix* left, const Matrix* right) {
     size_t r_cols = right->cols;
 
     if (l_cols != r_rows) {
-        return NULL_POINTER;
+        return EMPTY_MATRIX_ERROR;
     }
 
     Matrix* return_matrix = NULL;
     return_matrix = create_matrix(l_rows, r_cols);
     if (!return_matrix) {
-        return NULL_POINTER;
+        return EMPTY_MATRIX_ERROR;
     }
 
     double temp;
@@ -440,34 +447,34 @@ int det(const Matrix* matrix, double* val) {
 Matrix* adj(const Matrix* matrix) {
     // присоединенная = обратная * определитель
     if (!matrix) {
-        return NULL_POINTER;
+        return EMPTY_MATRIX_ERROR;
     }
 
     size_t rows = matrix->rows;
     size_t cols = matrix->cols;
 
     if (rows != cols) {
-        return NULL_POINTER;
+        return EMPTY_MATRIX_ERROR;
     }
 
     Matrix* inv_matrix = NULL;
     inv_matrix = inv(matrix);
     if (!inv_matrix) {
-        return NULL_POINTER;
+        return EMPTY_MATRIX_ERROR;
     }
 
     double determinant = 0;
     int error = det(matrix, &determinant);
     if (error || (fabs(determinant) < EPS)) {
         free_matrix(inv_matrix);
-        return NULL_POINTER;
+        return EMPTY_MATRIX_ERROR;
     }
 
     Matrix* return_matrix = NULL;
     return_matrix = mul_scalar(inv_matrix, determinant);
     if (!return_matrix) {
         free_matrix(inv_matrix);
-        return NULL_POINTER;
+        return EMPTY_MATRIX_ERROR;
     }
 
     free_matrix(inv_matrix);
@@ -476,27 +483,27 @@ Matrix* adj(const Matrix* matrix) {
 
 Matrix* inv(const Matrix* matrix) {
     if (!matrix) {
-        return NULL_POINTER;
+        return EMPTY_MATRIX_ERROR;
     }
 
     size_t rows = matrix->rows;
     size_t cols = matrix->cols;
 
     if (rows != cols) {
-        return NULL_POINTER;
+        return EMPTY_MATRIX_ERROR;
     }
 
     // если определитель = 0 -> NULL
     double determinant = 0;
     int error = det(matrix, &determinant);
     if (error || (fabs(determinant) < EPS)) {
-        return NULL_POINTER;
+        return EMPTY_MATRIX_ERROR;
     }
 
     Matrix* return_matrix = NULL;
     return_matrix = create_matrix(rows, rows);
     if (!return_matrix) {
-        return NULL_POINTER;
+        return EMPTY_MATRIX_ERROR;
     }
 
     if (rows == 1) {
@@ -514,7 +521,7 @@ Matrix* inv(const Matrix* matrix) {
     matrix_inv = copy(matrix);
     if (!matrix_inv) {
         free_matrix(return_matrix);
-        return NULL_POINTER;
+        return EMPTY_MATRIX_ERROR;
     }
 
     // вычисление обратной матрицы

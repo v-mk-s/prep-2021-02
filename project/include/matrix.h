@@ -6,7 +6,7 @@
 #define NON_STANDARD_ERROR    -1
 #define NULL_MATRIX           -2
 #define BOUNDARY_ERROR        -3
-#define NULL_POINTER          NULL
+#define EMPTY_MATRIX_ERROR    NULL
 
 #include <stddef.h>
 
