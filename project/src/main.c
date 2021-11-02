@@ -10,11 +10,11 @@
 #define ERR_STRTOL    (-3)
 
 typedef enum {
-    CASE_TIMER_FROM_FUNC =      1,
-    CASE_CUSTOM_POW_FUNC =      2,
-    CASE_CUSTOM_PRIME_FUNC =    3,
-    CASE_NUMBER_SEQUENCE_FUNC = 4
-} Case_main;
+    CASE_TIMER_FROM_FUNC = 1,
+    CASE_CUSTOM_POW_FUNC,
+    CASE_CUSTOM_PRIME_FUNC,
+    CASE_NUMBER_SEQUENCE_FUNC
+} case_main;
 
 int main(int argc, const char** argv) {
     if (argc < 3) {
@@ -22,9 +22,10 @@ int main(int argc, const char** argv) {
     }
 
     // заменил atoi на strtol, повысил безопасность кода
-    char* err_argv_1 = NULL;
-    int test_case = (int) strtol(argv[1], &err_argv_1, 0);
-    if (*err_argv_1 != '\0') {
+    char *test_case_end = NULL;
+    int test_case = (int) strtol(argv[1], &test_case_end, 0);
+    if (*test_case_end != '\0')
+    {
         return ERR_STRTOL;
     }
 
@@ -32,9 +33,9 @@ int main(int argc, const char** argv) {
 
     switch (test_case) {
         case CASE_TIMER_FROM_FUNC: {
-            char* err_data_case_timer = NULL;
-            int to = (int) strtol(data, &err_data_case_timer, 0);
-            if (*err_data_case_timer != '\0') {
+            char* to_end = NULL;
+            int to = (int) strtol(data, &to_end, 0);
+            if (to_end != '\0') {
                 return ERR_STRTOL;
             }
             size_t ticks_count = timer_from(to);
@@ -44,15 +45,15 @@ int main(int argc, const char** argv) {
         }
         case CASE_CUSTOM_POW_FUNC: {
             if (argc == 4) {
-                char* err_data_case_pow = NULL;
-                int base = (int) strtol(data, &err_data_case_pow, 0);
-                if (*err_data_case_pow != '\0') {
+                char* base_end = NULL;
+                int base = (int) strtol(data, &base_end, 0);
+                if (*base_end != '\0') {
                     return ERR_STRTOL;
                 }
 
-                char* err_argv_3_case_pow = NULL;
-                int pow = (int) strtol(argv[3], &err_argv_3_case_pow, 0);
-                if (*err_argv_3_case_pow != '\0') {
+                char* pow_end = NULL;
+                int pow = (int) strtol(argv[3], &pow_end, 0);
+                if (*pow_end != '\0') {
                     return ERR_STRTOL;
                 }
 
@@ -70,9 +71,9 @@ int main(int argc, const char** argv) {
             break;
         }
         case CASE_CUSTOM_PRIME_FUNC: {
-            char* err_data_case_prime = NULL;
-            int num = (int) strtol(data, &err_data_case_prime, 0);
-            if (*err_data_case_prime != '\0') {
+            char* data_case_prime_end = NULL;
+            int num = (int) strtol(data, &data_case_prime_end, 0);
+            if (*data_case_prime_end != '\0') {
                 return ERR_STRTOL;
             }
 
@@ -81,9 +82,9 @@ int main(int argc, const char** argv) {
             break;
         }
         case CASE_NUMBER_SEQUENCE_FUNC: {
-            char* err_data_case_sequence = NULL;
-            int num = (int) strtol(data, &err_data_case_sequence, 0);
-            if (*err_data_case_sequence != '\0') {
+            char* data_case_sequence_end = NULL;
+            int num = (int) strtol(data, &data_case_sequence_end, 0);
+            if (*data_case_sequence_end != '\0') {
                 return ERR_STRTOL;
             }
 
@@ -96,4 +97,3 @@ int main(int argc, const char** argv) {
         }
     }
 }
-
