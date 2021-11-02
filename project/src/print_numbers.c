@@ -9,12 +9,13 @@
 void print_number_sequence(int to) {
     if (to == SEQUENCE_TO) {
         printf("%d", SEQUENCE_TO);
-    } else {
-        if (to > SEQUENCE_TO) {
-            print_number_sequence(to - 1);
-        } else {
-            print_number_sequence(to + 1);
-        }
-        printf(" %d", to);
+        return;
     }
+
+    if (to > SEQUENCE_TO) {
+        print_number_sequence(to - 1);
+    } else {
+        print_number_sequence(to + 1);
+    }
+    printf(" %d", to);
 }
