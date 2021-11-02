@@ -24,8 +24,7 @@ int main(int argc, const char** argv) {
     // заменил atoi на strtol, повысил безопасность кода
     char *test_case_end = NULL;
     int test_case = (int) strtol(argv[1], &test_case_end, 0);
-    if (*test_case_end != '\0')
-    {
+    if (*test_case_end != '\0') {
         return ERR_STRTOL;
     }
 
@@ -35,7 +34,7 @@ int main(int argc, const char** argv) {
         case CASE_TIMER_FROM_FUNC: {
             char* to_end = NULL;
             int to = (int) strtol(data, &to_end, 0);
-            if (to_end != '\0') {
+            if (*to_end != '\0') {
                 return ERR_STRTOL;
             }
             size_t ticks_count = timer_from(to);
