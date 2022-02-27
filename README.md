@@ -40,3 +40,8 @@ void test_write_to_file() {
 	// ....
 }
 ```
+
+# Правила пользования тестирующим модулем
+Tестирующий модуль лежит в папке project_test. Запускать его командой $make test_read_and_write,
+$make build_test компилирует тестирующий модуль и исполняемый файл записывает в test.out
+Функция write_to_file записывает данные в test_record.dat

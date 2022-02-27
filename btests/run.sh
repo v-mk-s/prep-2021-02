@@ -85,3 +85,4 @@ for file in $RECORDS_F_NAME $TRANSACTIONS_F_NAME $BLACKRECORDS_F_NAME; do
 done
 
 echo "***** TEST SUCCEED *****"
+

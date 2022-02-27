@@ -1,9 +1,7 @@
 #ifndef PROJECT_INCLUDE_UTILS_H_
 #define PROJECT_INCLUDE_UTILS_H_
 
-#define FILENAME_DB_CLIENTS "record.dat"
-#define FILENAME_TRANSACTION "transaction.dat"
-#define FILENAME_DB_CLIENTS_BACKUP "blackrecord.dat"
+#define FILENAME_DB_CLIENTS "test_record.dat"
 
 typedef struct {
     int number;
